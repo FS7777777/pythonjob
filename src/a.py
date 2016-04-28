@@ -12,14 +12,14 @@ tcpSerSock.listen(5)
 
 while True:
     print 'waiting for connetction'
-    tcpSerSock, addr = tcpSerSock.accept()
+    conn, addr = tcpSerSock.accept()
     print '...connetcted from:', addr
 
     while True:
-        data = tcpSerSock.recv(BUFSIZ)
+        data = conn.recv(BUFSIZ)
         if not data:
             break
-        tcpSerSock.send('[%s] %s' % (ctime(), data))
+        conn.send('[%s] %s' % (ctime(), data))
 
-        tcpSerSock.close()
+        conn.close()
 tcpSerSock.close()
