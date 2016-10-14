@@ -27,12 +27,13 @@ def read_excel():
     print sheet1.cell(1, 0).value.encode('utf-8')
     # print sheet1.cell_value(1, 0).encode('utf-8')
     # print sheet1.row(1)[0].value.encode('utf-8')
+    date_value = xlrd.xldate_as_tuple(
+        sheet1.cell_value(1, 2), workbook.datemode)
+    print date_value
+    print date(*date_value[:3]).strftime('%Y/%m/%d')
 
     # 获取单元格内容的数据类型
     print sheet1.cell(1, 0).ctype
-    print sheet1.cell(1, 1).ctype
-    print sheet1.cell(1, 2).ctype
-    print sheet1.cell(1, 4).ctype
 
 if __name__ == '__main__':
     read_excel()
