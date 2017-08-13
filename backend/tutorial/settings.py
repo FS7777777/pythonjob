@@ -146,7 +146,10 @@ STATIC_URL = '/static/'
 #channel setting
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
         "ROUTING": "app_channels.routing.channel_routing",
     },
 }
