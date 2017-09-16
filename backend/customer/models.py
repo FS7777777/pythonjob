@@ -25,5 +25,7 @@ class T_User_Lesson(models.Model):
     f_user_id = models.IntegerField()
     #课程id
     f_lesson_id = models.IntegerField()
+    #实际缴纳金额
+    f_payment = models.DecimalField()
     #课程完成情况
     f_finish_result = models.FloatField()
