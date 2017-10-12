@@ -31,8 +31,6 @@ class T_Lesson(object):
     f_id = models.AutoField(primary_key=True)
     #所属场馆
     f_store_id =models.IntegerField()
-    #所属老师
-    f_teacher_id =models.IntegerField()
     #课程名称
     f_name = models.CharField(max_length=100)
     #开始时间
@@ -40,10 +38,14 @@ class T_Lesson(object):
     #结束时间
     f_end_time = models.DateTimeField()
     #课程容纳人数
-    
+    f_class_number = models.IntegerField()
     #报名人数
-
-    #是否过期
-
+    f_entered_number = models.IntegerField()
+    #课程是否结束
+    f_is_finished = models.BooleanField(default=False)
     #课程简介
     f_description = models.CharField(max_length=200)
+
+class Lessonship(object):
+    f_teacher = models.ForeignKey(T_Teacher, on_delete=models.CASCADE)
+    f_lesson = models.ForeignKey(T_Lesson, on_delete=models.CASCADE)
