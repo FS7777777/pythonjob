@@ -35,12 +35,12 @@ module.exports = {
     fallback: [path.join(__dirname, '../node_modules')]
   },
   module: {
-    preLoaders: [{
-      test: /\.vue$/,
-      loader: 'eslint',
-      include: projectRoot,
-      exclude: /node_modules|src\/components\/calendar/
-    }],
+    // preLoaders: [{
+    //   test: /\.vue$/,
+    //   loader: 'eslint',
+    //   include: projectRoot,
+    //   exclude: /node_modules|src\/components\/calendar/
+    // }],
     loaders: [{
       test: /\.vue$/,
       loader: 'vue'
@@ -68,9 +68,9 @@ module.exports = {
       }
     }]
   },
-  eslint: {
-    formatter: require('eslint-friendly-formatter')
-  },
+  // eslint: {
+  //   formatter: require('eslint-friendly-formatter')
+  // },
   vue: {
     loaders: utils.cssLoaders({
       sourceMap: useCssSourceMap
