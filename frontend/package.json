@@ -17,7 +17,8 @@
     "stylus": "^0.54.5",
     "vue": "^2.1.0",
     "vue-router": "^2.1.1",
-    "vue-tables-2": "^0.2.77"
+    "vue-tables-2": "^0.2.77",
+    "iview": "^2.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
