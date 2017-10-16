@@ -10,6 +10,7 @@ import dashboard from 'components/dashboard/dashboard'
 import multipleColumn from 'components/multipleColumn/multipleColumn'
 
 import home from 'src/views/home/home'
+import map from 'src/views/map/map'
 
 Vue.use(VueRouer)
 export default new VueRouer({
@@ -38,7 +39,8 @@ export default new VueRouer({
         path: '/home',
         component: home,
         children:[ 
-          { path: 'line', component: line}
+          { path: 'line', component: line},
+          { path: 'map', component: map}
         ]
     }
 ],
