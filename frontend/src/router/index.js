@@ -36,7 +36,10 @@ export default new VueRouer({
       component: line
     },{
         path: '/home',
-        component: home
+        component: home,
+        children:[ 
+          { path: 'line', component: line}
+        ]
     }
 ],
     linkActiveClass: 'active'

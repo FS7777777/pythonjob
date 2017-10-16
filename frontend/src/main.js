@@ -32,4 +32,12 @@ new Vue({
   }
 }).$mount('#app')
 
+router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start();
+  next();
+});
+
+router.afterEach(route => {
+  iView.LoadingBar.finish();
+});
 router.push('dashboard')
