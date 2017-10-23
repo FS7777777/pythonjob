@@ -63,7 +63,7 @@
                     <router-view class="layout-content-main">内容区域</router-view>
                 </div>
                 <div class="layout-copy">
-                    2011-2016 &copy; TalkingData
+                    2011-2017 &copy; TalkingData
                 </div>
             </Col>
         </Row>

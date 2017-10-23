@@ -11,6 +11,7 @@ import multipleColumn from 'components/multipleColumn/multipleColumn'
 
 import home from 'src/views/home/home'
 import map from 'src/views/map/map'
+import bpmn from 'src/views/bpmn/bpmn'
 
 Vue.use(VueRouer)
 export default new VueRouer({
@@ -40,7 +41,8 @@ export default new VueRouer({
         component: home,
         children:[ 
           { path: 'line', component: line},
-          { path: 'map', component: map}
+          { path: 'map', component: map},
+          { path: 'bpmn', component: bpmn}
         ]
     }
 ],
