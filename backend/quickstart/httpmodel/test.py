@@ -12,3 +12,8 @@ class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
         fields = ('title', 'code', 'linenos', 'language', 'style')
+
+class TestHttp(serializers.Serializer):
+    title = serializers.CharField()
+    code = serializers.CharField()
+    linenos = serializers.BooleanField()

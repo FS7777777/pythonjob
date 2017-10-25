@@ -8,7 +8,7 @@ import json
 
 from django.contrib.auth.models import User
 from quickstart.serializers import UserSerializer
-from quickstart.httpmodel.test import SnippetSerializer
+from quickstart.httpmodel.test import TestHttp
 
 from quickstart.models import Blog
 from django.utils import timezone
@@ -27,9 +27,9 @@ class UserViewSet(viewsets.ModelViewSet):
     @list_route(methods=['post'])
     def recent_users(self, request):
         data = JSONParser().parse(request)
-        serializer = SnippetSerializer(data=data)
+        serializer = TestHttp(data=data)
         if serializer.is_valid():
-            print(serializer.data)
+            print(serializer.data['title'])
             return Response({'status': 'password set'})
         else:
             return Response(serializer.errors)
