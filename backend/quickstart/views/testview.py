@@ -29,6 +29,7 @@ class UserViewSet(viewsets.ModelViewSet):
         data = JSONParser().parse(request)
         serializer = SnippetSerializer(data=data)
         if serializer.is_valid():
+            print(serializer.data)
             return Response({'status': 'password set'})
         else:
             return Response(serializer.errors)
