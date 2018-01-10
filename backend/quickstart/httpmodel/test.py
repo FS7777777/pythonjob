@@ -1,19 +1,11 @@
-from django.db import models
-from rest_framework import serializers
 
-class Snippet(models.Model):
-    title = models.CharField(max_length=100, blank=True, default='')
-    code = models.TextField()
-    linenos = models.BooleanField(default=False)
-    language = models.CharField(default='python', max_length=100)
-    style = models.CharField(default='friendly', max_length=100)
+class Person(object):
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+    def __call__(self, friend):
+        print 'My name is %s...' % self.name
+        print 'My friend is %s...' % friend
 
-class SnippetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Snippet
-        fields = ('title', 'code', 'linenos', 'language', 'style')
-
-class TestHttp(serializers.Serializer):
-    title = serializers.CharField()
-    code = serializers.CharField()
-    linenos = serializers.BooleanField()
+p = Person('Bob', 'male')
+p('Tim')

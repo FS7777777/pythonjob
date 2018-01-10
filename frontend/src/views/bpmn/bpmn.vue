@@ -9,7 +9,7 @@ export default {
   },  
   methods:{  
     init:function () {
-        var xml; // my BPMN 2.0 xml
+        let xml; // my BPMN 2.0 xml
         var viewer = new BpmnViewer({ container: '#container' });
         
         viewer.importXML(xml, function(err) {
