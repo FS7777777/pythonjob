@@ -1,5 +1,5 @@
 class Field(object):
-
+    
     def __init__(self, name, column_type):
         self.name = name
         self.column_type = column_type
