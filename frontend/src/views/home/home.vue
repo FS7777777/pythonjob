@@ -60,7 +60,12 @@
                     </Breadcrumb>
                 </div>
                 <div class="layout-content">
-                    <router-view class="layout-content-main">内容区域</router-view>
+                    <!-- <router-view class="layout-content-main">内容区域</router-view> -->
+                    <div class="btn-group" role="group" aria-label="...">  
+      <button type="button" class="btn btn-default">Left</button>  
+      <button type="button" class="btn btn-default">Middle</button>  
+      <button type="button" class="btn btn-default">Right</button>  
+    </div>
                 </div>
                 <div class="layout-copy">
                     2011-2017 &copy; TalkingData
@@ -70,6 +75,9 @@
     </div>
 </template>
 <script>
+$(function () {  
+    alert(123);  
+ }); 
     export default {
         
     }

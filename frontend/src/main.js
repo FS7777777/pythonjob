@@ -6,6 +6,9 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
 import {DatePicker} from 'element-ui'
+import $ from 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 Vue.component(DatePicker.name, DatePicker)
 

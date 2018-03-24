@@ -19,7 +19,8 @@
     "vue-router": "^2.1.1",
     "vue-tables-2": "^0.2.77",
     "iview": "^2.4.0",
-    "bpmn-js": "^0.22.1"
+    "bpmn-js": "^0.22.1",
+    "bootstrap":"^3.3.7"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -66,7 +67,8 @@
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",
-    "webpack-merge": "^0.14.1"
+    "webpack-merge": "^0.14.1",
+    "bootstrap":"^3.3.7"
   },
   "engines": {
     "node": ">= 4.0.0",
