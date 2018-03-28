@@ -1,9 +1,8 @@
 import requests
 import json
 from bs4 import BeautifulSoup
+from datafile import datalog
+r = requests.get('https://movie.douban.com/top250')
+print(r.content)
+datalog.write(r.content)
 
-headers={'Content-Type': 'application/json'}
-data = {'userName':'yangfei','passwd':'123456'}
-r = requests.post('http://192.168.1.38:8080/api/users/login',data=json.dumps(data),headers=headers)
-print(r.json())
-print(json.dumps(data))

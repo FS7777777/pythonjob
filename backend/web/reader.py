@@ -9,29 +9,31 @@ headers = {
     "Accept-Encoding": "gzip, deflate",  
     "Host": "www.zhihu.com",  
     "Upgrade-Insecure-Requests": "1",  
-} 
+}
 
-def login(url):
-    """
-    处理登录部分
-    入参：url
-    返回：
-    """
-    pass
+class Reader(object): 
 
-def get_content(page):
-    """
-    解析page内容
-    入参：page
+    def login(self,url):
+        """
+        处理登录部分
+        入参：url
+        返回：
+        """
+        pass
 
-    """
-    pass
+    def get_content(self,page):
+        """
+        解析page内容
+        入参：page
 
-def write(str):
-    """
-    写文件读取内容写入文件
-    """
-    pass
+        """
+        pass
+
+    def write(self,str):
+        """
+        写文件读取内容写入文件
+        """
+        pass
 
 if __name__ == '__main__':
     print('run')
