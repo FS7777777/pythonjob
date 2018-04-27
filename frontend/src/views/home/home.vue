@@ -1,13 +1,11 @@
 <template>
     <div style="height: 100px;">
         <Row>
-            <Col span="2">2</Col>
+            <Col span="2">hello</Col>
             <Col span="11">
                 <Progress :percent="25"></Progress>
                 <i-switch v-model="islove"></i-switch>
                 <Button type="success"  @click="bchange(!islove)">Success</Button>
-            </Col>
-            <Col span="11">
             </Col>
         </Row>
     </div>

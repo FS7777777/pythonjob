@@ -32,7 +32,7 @@ export default {
     }
   },
   methods: {
-    _init() {
+    _selfinit() {
       this.legendArr = this.myChart.getOption().series
       this.legendArr.forEach((data) => {
         data.selected = true;
@@ -137,7 +137,7 @@ export default {
         data: [820, 932, 901, 934, 1290, 1330, 1320]
       }]
     });
-    this._init()
+    this._selfinit()
   }
 }
 

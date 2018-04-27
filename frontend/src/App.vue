@@ -6,16 +6,16 @@
 </style>
 
 <template>
-<div class="mainApp">
-  <router-view class="router-view"></router-view>
-</div>
-
+  <div class="mainApp">
+    <router-view />
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
+  name: 'app',
   data() {
     return {
       seller: {}

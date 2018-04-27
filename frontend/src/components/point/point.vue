@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    _init(options) {
+    _selfinit(options) {
       this.myChart = echarts.init(document.querySelector('.point .main'))
       this.myChart.setOption(options)
       this.legendArr = options.series
@@ -195,7 +195,7 @@ export default {
             data: this.convertData(res.data)
           }]
         }
-        this._init(options)
+        this._selfinit(options)
       });
     }
   },

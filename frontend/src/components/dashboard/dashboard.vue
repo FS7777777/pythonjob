@@ -30,7 +30,7 @@ export default {
     }
   },
   mounted() {
-    this._init()
+    this._selfinit()
   },
   methods: {
     _resize() {
@@ -38,7 +38,7 @@ export default {
         myChart.resize()
       })
     },
-    _init() {
+    _selfinit() {
       this.items = document.querySelectorAll('.flex-container .item')
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].dataset.order = i + 1;
