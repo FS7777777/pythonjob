@@ -14,7 +14,6 @@
 <template>
 <div class="columnChart">
   <v-header :name="name" :legendArr="legendArr" :myChart="myChart"></v-header>
-  <v-filter :myChart="myChart" v-if="myChart._dom"></v-filter>
   <div class="main"></div>
 </div>
 
@@ -23,16 +22,20 @@
 <script>
 import echarts from 'echarts'
 import header from 'components/header/header'
-import filter from 'components/filter/filter'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
       legendArr: [],
-      color: this.$store.state.color,
       myChart: {},
       name: '柱状图'
     }
+  },
+  computed: {
+    ...mapGetters({
+      color: 'colors',
+    })
   },
   methods: {
     _init() {
@@ -47,8 +50,7 @@ export default {
     }
   },
   components: {
-    'v-header': header,
-    'v-filter': filter
+    'v-header': header
   },
   mounted() {
     // 基于准备好的dom，初始化echarts实例

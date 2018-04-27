@@ -4,23 +4,22 @@ import Vuex from 'vuex'
 import router from './router'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import store from './store'
 
-import {DatePicker} from 'element-ui'
 import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
-Vue.component(DatePicker.name, DatePicker)
 
 Vue.use(Vuex)
 Vue.use(iView);
 
-const store = new Vuex.Store({
-  state: {
-    count: 0,
-    color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769']
-  }
-});
+// const store = new Vuex.Store({
+//   state: {
+//     count: 0,
+//     color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769']
+//   }
+// });
 
 new Vue({
   router,

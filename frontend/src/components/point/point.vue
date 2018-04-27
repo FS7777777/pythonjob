@@ -12,7 +12,6 @@
 <template lang="html">
 <div class="point">
   <v-header :name="name" :legendArr="legendArr" :myChart="myChart"></v-header>
-  <v-filter :myChart="myChart" v-if="myChart._dom"></v-filter>
   <div class="main"></div>
 </div>
 </template>
@@ -22,7 +21,6 @@ import axios from 'axios'
 import echarts from 'echarts'
 import china from 'echarts/map/js/china'
 import header from 'components/header/header'
-import filter from 'components/filter/filter'
 
 const USER_NAME = 'elastic'
 const PSW = 'elasticl@ethical.cn'
@@ -202,8 +200,7 @@ export default {
     }
   },
   components: {
-    'v-header': header,
-    'v-filter': filter
+    'v-header': header
   }
 }
 
