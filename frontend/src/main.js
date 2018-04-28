@@ -32,4 +32,4 @@ router.beforeEach((to, from, next) => {
 router.afterEach(route => {
   iView.LoadingBar.finish();
 });
-router.push('dashboard')
+//router.push('dashboard')

@@ -13,7 +13,11 @@ import bpmn from 'src/views/bpmn/bpmn'
 
 Vue.use(VueRouer)
 export default new VueRouer({
-    routes: [{
+    routes: [
+      {
+        path: '/',
+        redirect: { name: 'DB'}
+      },{
       path: '/column',
       component: column
     }, {
@@ -21,6 +25,7 @@ export default new VueRouer({
       component: point
     }, {
       path: '/dashboard',
+      name:'DB',
       component: dashboard
     }, {
       path: '/multipleColumn',
@@ -32,7 +37,6 @@ export default new VueRouer({
         path: '/home',
         component: home,
         children:[ 
-          { path: 'line', component: line},
           { path: 'map', component: map},
           { path: 'bpmn', component: bpmn}
         ]
