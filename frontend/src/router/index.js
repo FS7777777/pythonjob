@@ -9,7 +9,7 @@ import multipleColumn from 'components/multipleColumn/multipleColumn'
 
 import home from 'src/views/home/home'
 import map from 'src/views/map/map'
-import bpmn from 'src/views/bpmn/bpmn'
+import history from 'src/views/data/history'
 
 Vue.use(VueRouer)
 export default new VueRouer({
@@ -37,9 +37,11 @@ export default new VueRouer({
         path: '/home',
         component: home,
         children:[ 
-          { path: 'map', component: map},
-          { path: 'bpmn', component: bpmn}
+          { path: 'map', component: map}
         ]
+    },{
+      path: '/history',
+      component: history
     }
 ],
     linkActiveClass: 'active'

@@ -12,15 +12,14 @@
   "dependencies": {
     "babel-runtime": "^6.9.0",
     "echarts": "^3.3.2",
-    "element-ui": "^1.1.6",
+    "element-ui": "^2.3.7",
     "modernizr": "^3.3.1",
     "stylus": "^0.54.5",
     "vue": "^2.1.0",
     "vue-router": "^2.1.1",
     "vue-tables-2": "^0.2.77",
     "iview": "^2.4.0",
-    "bpmn-js": "^0.22.1",
-    "bootstrap":"^3.3.7"
+    "bpmn-js": "^0.22.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -67,8 +66,7 @@
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",
-    "webpack-merge": "^0.14.1",
-    "bootstrap":"^3.3.7"
+    "webpack-merge": "^0.14.1"
   },
   "engines": {
     "node": ">= 4.0.0",

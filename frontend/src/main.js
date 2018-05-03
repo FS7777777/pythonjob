@@ -5,11 +5,11 @@ import router from './router'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import store from './store'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
 
-
+Vue.use(ElementUI);
 Vue.use(Vuex)
 Vue.use(iView);
 
