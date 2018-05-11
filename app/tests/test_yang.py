@@ -30,3 +30,7 @@ class AuthActions(object):
 @pytest.fixture
 def auth(client):
     return AuthActions(client)
+
+
+if __name__=='__main__':
+    pytest.main()
