@@ -3,7 +3,7 @@ import pytest
 
 @pytest.fixture
 def app():
-    app = create_app({'TESTING': True})
+    app = Create_app({'TESTING': True})
 
     yield app
 
@@ -31,6 +31,10 @@ class AuthActions(object):
 def auth(client):
     return AuthActions(client)
 
+def test_login(auth):
+    auth.logout()
+    print('auth')
+    # assert 0
 
 if __name__=='__main__':
     pytest.main()

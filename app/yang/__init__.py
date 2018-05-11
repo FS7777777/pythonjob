@@ -26,7 +26,7 @@ def Create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    import auth,blog
+    from yang import auth,blog
     app.register_blueprint(auth.api)
     app.register_blueprint(blog.api)
 

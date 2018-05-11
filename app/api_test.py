@@ -1,5 +1,5 @@
 import os
-import tests
+from tests import test_yang
 
 if __name__=='__main__':
-    tests.test_yang.pytest.main()
+    test_yang.pytest.main()
