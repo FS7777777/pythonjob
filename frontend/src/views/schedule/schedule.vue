@@ -18,7 +18,7 @@
                     </el-col>
                     <el-col :span="20">
                         <transition name="el-zoom-in-center">
-                            <el-card class="box-card" shadow="always" v-show="step==1?true:false">
+                            <el-card class="box-card" shadow="always" v-show="step==0?true:false">
                                 <div slot="header">
                                     <span>登录</span>
                                 </div>
@@ -29,7 +29,7 @@
                             </el-card>
                         </transition>
                         <transition name="el-zoom-in-center">
-                            <el-card class="box-card" shadow="always" v-show="step==2?true:false">
+                            <el-card class="box-card" shadow="always" v-show="step==1?true:false">
                                 <div slot="header">
                                     <span>文件上传</span>
                                 </div>
@@ -49,7 +49,7 @@
                             </el-card>
                         </transition>
                         <transition name="el-zoom-in-center">
-                            <el-card class="box-card" shadow="always" v-show="step==3?true:false">
+                            <el-card class="box-card" shadow="always" v-show="step==2?true:false">
                                 <div slot="header">
                                     <span>开始上报</span>
                                 </div>
@@ -60,7 +60,7 @@
                             </el-card>
                         </transition>
                         <transition name="el-zoom-in-center">
-                            <el-card class="box-card" shadow="always" v-show="step==4?true:false">
+                            <el-card class="box-card" shadow="always" v-show="step==3?true:false">
                                 <div slot="header">
                                     <span>确认完成</span>
                                 </div>
@@ -71,12 +71,12 @@
                             </el-card>
                         </transition>
                         <transition name="el-zoom-in-center">
-                            <el-card class="box-card" shadow="always" v-show="step==5?true:false">
+                            <el-card class="box-card" shadow="always" v-show="step==4?true:false">
                                 <div slot="header">
                                     <span>完成</span>
                                 </div>
                                 <div class="parent">
-                                    <el-progress type="circle" :percentage="100" status="success" show-text="true"></el-progress>
+                                    <el-progress type="circle" :percentage="100" status="success"></el-progress>
                                 </div>
                                 <el-button type="success" size="small" style="float: right; margin: 20px;">确认</el-button>
                             </el-card>
