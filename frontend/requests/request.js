@@ -16,9 +16,9 @@ export default {
     url = baseUrl + url + '?' + new Date().getTime();
     try {
         const response = await axios.get(url, config);
-        return response;
+        return response.data;
     } catch (error) {
-        console.log(error)
+        console.log(error.response)
     }
   },
 
@@ -28,6 +28,7 @@ export default {
     try{
         const response = await axios.post(url, data, config);
         //console.log(response)
+        return response.data;
     }catch(error){
         console.log(error.response.status)
     }
