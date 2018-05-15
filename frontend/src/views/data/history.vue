@@ -1,4 +1,4 @@
-<<template>
+<template>
     <div style="background:#eee;padding:20px">
         <el-button type="primary" size="small" :loading="loading" @click="showModal">加载中</el-button>
         <el-button type="primary" size="small" @click="add">添加</el-button>

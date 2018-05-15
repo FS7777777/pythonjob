@@ -10,13 +10,14 @@ import multipleColumn from 'components/multipleColumn/multipleColumn'
 import home from 'src/views/home/home'
 import map from 'src/views/map/map'
 import history from 'src/views/data/history'
+import schedule from 'src/views/schedule/schedule'
 
 Vue.use(VueRouer)
 export default new VueRouer({
     routes: [
       {
         path: '/',
-        redirect: { name: 'DB'}
+        redirect: { name: 'sc'}
       },{
       path: '/column',
       component: column
@@ -42,6 +43,10 @@ export default new VueRouer({
     },{
       path: '/history',
       component: history
+    },{
+      path: '/schedule',
+      name:'sc',
+      component: schedule
     }
 ],
     linkActiveClass: 'active'

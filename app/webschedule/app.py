@@ -14,3 +14,7 @@ class web_driver(object):
         time.sleep(3)
 
         browser.quit()
+
+
+if __name__=='__main__':
+    web_driver().funcname()
