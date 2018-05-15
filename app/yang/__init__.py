@@ -1,8 +1,10 @@
 import os
 from flask import Flask
+from flask_cors import *
 
 def Create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app,supports_credentials=True)
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
         SECRET_KEY='dev'

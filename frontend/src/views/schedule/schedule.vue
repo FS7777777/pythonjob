@@ -25,7 +25,7 @@
                                 <div v-for="o in 4" :key="o">
                                     {{'列表内容 ' + o }}
                                 </div>
-                                <el-button type="success" size="small" style="float: right; margin: 20px;">确认</el-button>
+                                <el-button type="success" size="small" style="float: right; margin: 20px;" @click="login">确认</el-button>
                             </el-card>
                         </transition>
                         <transition name="el-zoom-in-center">
@@ -43,7 +43,7 @@
                                 :auto-upload="false">
                                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-                                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                <div slot="tip" class="el-upload__tip">上传说明</div>
                                 </el-upload>
                                 <el-button type="success" size="small" style="float: right; margin: 20px;">确认</el-button>
                             </el-card>
@@ -71,7 +71,7 @@
                             </el-card>
                         </transition>
                         <transition name="el-zoom-in-center">
-                            <el-card class="box-card" shadow="always" v-show="step==4?true:false">
+                            <el-card class="box-card" shadow="always" v-show="(step==4 || step==5)?true:false">
                                 <div slot="header">
                                     <span>完成</span>
                                 </div>
@@ -88,14 +88,18 @@
    </div> 
 </template>
 <script>
+import {loginPage} from '../../service/service';
 export default {
   data () {
-        return {
-            step:0,
-            fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
-        }
+    return {
+        step:0,
+        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+    }
     },
     methods: {
+        async login(){
+           let res = await loginPage.login();
+        },
         next(){
             if(this.step==5){
                 return;

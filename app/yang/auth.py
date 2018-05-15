@@ -1,4 +1,4 @@
-from flask import (Blueprint,request)
+from flask import (Blueprint,request,make_response)
 
 api = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -9,7 +9,9 @@ def check_load():
 @api.route('/login', methods=('GET', 'POST'))
 def login():
     print('sign in')
-    return "sign in"
+    # resp = make_response()
+    # resp.status = 500
+    return 'resp'
 
 
 @api.route('/logout')
