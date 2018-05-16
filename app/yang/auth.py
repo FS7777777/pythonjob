@@ -9,9 +9,9 @@ def check_load():
 @api.route('/login', methods=('GET', 'POST'))
 def login():
     print('sign in')
-    # resp = make_response()
+    resp = make_response()
     # resp.status = 500
-    return 'resp'
+    return resp
 
 
 @api.route('/logout')

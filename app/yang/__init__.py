@@ -28,10 +28,10 @@ def Create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    from yang import auth,blog
+    from yang import auth,blog,exception
     app.register_blueprint(auth.api)
     app.register_blueprint(blog.api)
-
+    app.register_blueprint(exception.exception)
     return app
 
 
