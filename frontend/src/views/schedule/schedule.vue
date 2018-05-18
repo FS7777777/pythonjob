@@ -98,7 +98,7 @@ export default {
     },
     methods: {
         async login(){
-           let res = await loginPage.login();
+           let res = await loginPage.login({username:'yang',pwd:'123456'});
         },
         next(){
             if(this.step==5){

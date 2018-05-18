@@ -30,6 +30,7 @@ export default {
         //console.log(response)
         return response.data;
     }catch(error){
+        // debugger;
         console.log(error.response.status)
     }
     // return response;

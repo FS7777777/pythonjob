@@ -1,4 +1,6 @@
+import json
 from flask import (Blueprint,request,make_response)
+from flask import jsonify
 
 api = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -6,12 +8,12 @@ api = Blueprint('auth', __name__, url_prefix='/auth')
 def check_load():
     print('just check_load')
 
-@api.route('/login', methods=('GET', 'POST'))
+@api.route('/login', methods=['POST'])
 def login():
-    print('sign in')
-    resp = make_response()
+    data = json.loads(request.get_data())
+    print(data)
     # resp.status = 500
-    return resp
+    return jsonify(data)
 
 
 @api.route('/logout')
