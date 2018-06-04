@@ -8,11 +8,11 @@ import sys
 
 
 class PythonService(win32serviceutil.ServiceFramework):
-    # 服务名
+    '''服务名'''
     _svc_name_ = "ALicense"
-    # 服务显示名称
+    '''服务显示名称'''
     _svc_display_name_ = "ALicense Is Exist "
-    # 服务描述
+    '''服务描述'''
     _svc_description_ = "ALicense  Is Exist License windows"
 
     def __init__(self, args):
@@ -34,9 +34,9 @@ class PythonService(win32serviceutil.ServiceFramework):
         self.run = False
         self._Log('stop')
 
-    def _Log(self,str):
+    def _Log(self,sb):
         with open('F:/helloServices.txt','a') as f:
-            f.writelines('hello world'+str+'\n')
+            f.writelines(time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())+ 'hello world'+sb+'\n')
 
 if __name__=='__main__':
     if len(sys.argv) == 1:
