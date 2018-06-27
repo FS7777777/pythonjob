@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_cors import *
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
 app = Flask(__name__, instance_relative_config=True)
 # sqlite:/// 三个标示相对路径 四个标示绝对路径
@@ -9,6 +10,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 #声明db
 db = SQLAlchemy(app)
+#序列化
+ma = Marshmallow(app)
 
 def Create_app(test_config=None):
 
@@ -38,9 +41,10 @@ def Create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    from yang import auth,blog,exception
+    from yang import auth,blog,exception,admin
     app.register_blueprint(auth.api)
     app.register_blueprint(blog.api)
+    app.register_blueprint(admin.api)
     app.register_blueprint(exception.exception)
     return app
 
