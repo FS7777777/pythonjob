@@ -4,6 +4,7 @@ pip install flask-sqlalchemy marshmallow-sqlalchemy
 pip install marshmallow-sqlalchemy
 
 https://blog.igevin.info/posts/flask-rest-serialize-deserialize/
+https://www.jianshu.com/p/594865f0681b
 
 
 序列化
@@ -32,3 +33,36 @@ data = json.loads(request.get_data())
 print(data)
 user_schema = UserSchema()
 data, errors = user_schema.load(data)
+
+
+#嵌套json序列化
+import datetime as dt
+from marshmallow import Schema, fields, pprint
+
+class User(object):
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+        self.created_at = dt.datetime.now()
+        self.friends = []
+        self.employer = None
+
+class Blog(object):
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author  # A User object
+
+class UserSchema(Schema):
+    name = fields.String()
+    email = fields.Email()
+    created_at = fields.DateTime()
+
+class BlogSchema(Schema):
+    title = fields.String()
+    author = fields.Nested(UserSchema)
+
+
+user = User(name="Monty", email="monty@python.org")
+blog = Blog(title="Something Completely Different", author=user)
+result, errors = BlogSchema().dump(blog)
+pprint(result)
