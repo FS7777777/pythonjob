@@ -1,4 +1,4 @@
-from flask import (jsonify, request)
+from flask import (jsonify, request, abort, make_response)
 import json
 from .api_route import api
 from ..module import db, User, UserSchema
@@ -10,6 +10,7 @@ def user_add():
     print(data)
     user_schema = UserSchema()
     print(user_schema.load(data).errors)
+    # abort(503)
     # print(user_schema.load(data).data)
     # db.session.add(user_schema.load(data).data)
     # db.session.commit()

@@ -1,6 +1,7 @@
 from flask import (jsonify, request)
+import json
 from .api_route import api
-from ..module import db, Department
+from ..module import db, Department, DepartmentSchema
 
 
 @api.route('/depts', methods=['GET'])
@@ -9,13 +10,16 @@ def get_depts():
     pass
 
 @api.route('/dept', methods=['POST'])
-def add(args):
+def dept_add():
     '''新增部门'''
     data = json.loads(request.get_data())
-
-    dept = Department()
     print(data)
-    return data
+
+    department_schema = DepartmentSchema()
+    print(department_schema.load(data).errors)
+    db.session.add(department_schema.load(data).data)
+    db.session.commit()
+    return jsonify({'code':1,'msg':'添加成功','obj':data})
 
 @api.route('/dept', methods=['PUT'])
 def modify():
