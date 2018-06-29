@@ -7,7 +7,11 @@ from ..module import db, Department, DepartmentSchema
 @api.route('/depts', methods=['GET'])
 def get_depts():
     '''获取所有部门'''
-    pass
+    depts = Department.query.all()
+    print(depts)
+    result, errors = DepartmentSchema().dump(depts, many=True)
+    print(result)
+    return jsonify({'code':1,'msg':'添加成功','data':result})
 
 @api.route('/dept', methods=['POST'])
 def dept_add():
@@ -19,13 +23,14 @@ def dept_add():
     print(department_schema.load(data).errors)
     db.session.add(department_schema.load(data).data)
     db.session.commit()
-    return jsonify({'code':1,'msg':'添加成功','obj':data})
+    return jsonify({'code':1,'msg':'添加成功','data':data})
 
 @api.route('/dept', methods=['PUT'])
 def modify():
     '''修改部门'''
     data = json.loads(request.get_data())
     print(data)
+
     return data
 
 @api.route('/dept/<int:dept_id>', methods=['GET','DELETE'])
