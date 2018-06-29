@@ -66,3 +66,5 @@ user = User(name="Monty", email="monty@python.org")
 blog = Blog(title="Something Completely Different", author=user)
 result, errors = BlogSchema().dump(blog)
 pprint(result)
+
+UserData.query.filter_by(username='name').update({'password':'newdata'})
