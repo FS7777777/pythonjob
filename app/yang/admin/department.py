@@ -8,11 +8,9 @@ from ..module import db, Department, DepartmentSchema
 def get_depts():
     '''获取所有部门'''
     depts = Department.query.all()
-    print(depts)
     result, errors = DepartmentSchema().dump(depts, many=True)
     if(len(errors)>0):
         return jsonify({'code':0,'msg':'获取失败','data':[]})
-    print(result)
     return jsonify({'code':1,'msg':'添加成功','data':result})
 
 @api.route('/dept', methods=['POST'])
