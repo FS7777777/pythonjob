@@ -26,6 +26,7 @@ def Create_app(test_config=None):
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
+        print(app.config['DEBUG'])
     else:
         # load the test config if passed in
         app.config.update(test_config)
@@ -39,6 +40,7 @@ def Create_app(test_config=None):
     
     @app.route('/hello')
     def hello():
+        print(app.debug)
         return 'Hello, World!'
 
     from yang import auth,blog,exception,admin

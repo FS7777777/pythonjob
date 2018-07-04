@@ -1,6 +1,7 @@
 import json
 from flask import (Blueprint,request,make_response)
 from flask import jsonify
+from .common.console import Console
 
 api = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -18,5 +19,5 @@ def login():
 
 @api.route('/logout')
 def logout():
-    print('sign in')
+    Console.log('sign in')
     return "sign out"
