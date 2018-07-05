@@ -4,15 +4,16 @@ from .. import db, ma
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    login_name = db.Column(db.String(32), unique=True, nullable=False)
-    username = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(120))
-    password = db.Column(db.String(32), nullable=False)
+    fullname = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(32), unique=True, nullable=False)
+    phone = db.Column(db.String(11))
+    password = db.Column(db.String(32), nullable=False,default='000000')
     dept_id = db.Column(db.Integer)
     role_id = db.Column(db.Integer)
+    is_enable = db.Column(db.Boolean, default=True)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.fullname
 
 
 
@@ -27,7 +28,9 @@ class Department(db.Model):
     #机构类型
     organization_type = db.Column(db.String(32), nullable=False)
     #排序号
-    sort_number = db.Column(db.Integer, nullable=False)
+    sort_number = db.Column(db.Integer)
+    #排序号
+    level = db.Column(db.Integer, nullable=False, default=1)
 
     def __repr__(self):
         return '<Department \'%s\'>' % self.fullname

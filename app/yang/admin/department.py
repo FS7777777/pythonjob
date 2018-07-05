@@ -11,7 +11,7 @@ def get_depts():
     result, errors = DepartmentSchema().dump(depts, many=True)
     if(len(errors)>0):
         return jsonify({'code':0,'msg':'获取失败','data':[]})
-    return jsonify({'code':1,'msg':'添加成功','data':result})
+    return jsonify({'code':1,'msg':'获取成功','data':result})
 
 @api.route('/dept', methods=['POST'])
 def dept_add():

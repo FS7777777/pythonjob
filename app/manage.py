@@ -1,6 +1,6 @@
 '''初始化数据库'''
 from yang import db
-from yang.module import *
+from yang.module import User
 
 
 if __name__=='__main__':
