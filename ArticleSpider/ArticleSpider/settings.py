@@ -65,7 +65,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'ArticleSpider.pipelines.ArticleImagePipeline': 2,
+#    'ArticleSpider.pipelines.ArticleImagePipeline': 300,
     # 'ArticleSpider.pipelines.JsonExporterPipleline': 1,
 }
 

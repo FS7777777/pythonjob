@@ -4,6 +4,14 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+# try:
+#     from cStringIO import StringIO as BytesIO
+# except ImportError:
+#     from io import BytesIO
+
+from PIL import Image
+import io
+
 
 import codecs
 import json
@@ -35,9 +43,11 @@ class JsonExporterPipleline(object):
 
 class ArticleImagePipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
-        print('++++++++++++++++++++++++++++++++++++++++++++')
-        print(item['imge'])
-        yield scrapy.Request(item['imge'])
+        if not item.get('url'):
+            raise DropItem('item not find any url:{}'.format(json.dumps(item)))
+
+        yield scrapy.Request(url=item.get('url'))
+
     def item_completed(self, results, item, info):
         image_paths = [x['path'] for ok, x in results if ok]
         if not image_paths:
