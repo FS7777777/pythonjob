@@ -6,6 +6,8 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import MapCompose, TakeFirst, Join
 
 
 class ArticlespiderItem(scrapy.Item):
@@ -13,8 +15,15 @@ class ArticlespiderItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+def proc_input(value):
+    return "[终结者]:"+value
+
+class ArticleItemLoader(ItemLoader):
+    '''使用了ItemLoader scrapy.Field(output_processor=MapCompose())才起作用'''
+    default_output_processor = TakeFirst()
+
 class ArticleItem(scrapy.Item):
     url = scrapy.Field()
     imge = scrapy.Field()
-    content = scrapy.Field()
+    content = scrapy.Field(output_processor=MapCompose(proc_input))
     imge_path = scrapy.Field()

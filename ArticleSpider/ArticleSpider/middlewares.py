@@ -6,6 +6,8 @@
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from fake_useragent import UserAgent
+from tools.crawl_xici_ip import get_random_proxy
 
 
 class ArticlespiderSpiderMiddleware(object):
@@ -69,3 +71,30 @@ class JSPageMiddleware(object):
             print ("访问:{0}".format(request.url))
 
             return HtmlResponse(url=spider.browser.current_url, body=spider.browser.page_source, encoding="utf-8", request=request)
+
+
+class RandomUserAgentMiddlware(object):
+    #随机更换user-agent
+    def __init__(self, crawler):
+        super(RandomUserAgentMiddlware, self).__init__()
+        self.ua = UserAgent()
+        self.ua_type = crawler.settings.get("RANDOM_UA_TYPE", "random")
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(crawler)
+
+    def process_request(self, request, spider):
+        '''通过ua对象获取 random属性'''
+        def get_ua():
+            return getattr(self.ua, self.ua_type)
+        
+        print(get_ua())
+        request.headers.setdefault('User-Agent', get_ua())
+
+class RandomProxyMiddleware(object):
+    #动态设置ip代理
+    def process_request(self, request, spider):
+        get_ip = get_random_proxy()
+        print(get_ip)
+        request.meta["proxy"] = get_ip

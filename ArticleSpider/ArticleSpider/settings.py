@@ -54,6 +54,8 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    'ArticleSpider.middlewares.JSPageMiddleware': 1,
+   'ArticleSpider.middlewares.RandomUserAgentMiddlware': 2,
+#    'ArticleSpider.middlewares.RandomProxyMiddleware': 3,
 }
 
 # Enable or disable extensions
@@ -66,7 +68,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
 #    'ArticleSpider.pipelines.ArticleImagePipeline': 300,
-    # 'ArticleSpider.pipelines.JsonExporterPipleline': 1,
+    'ArticleSpider.pipelines.JsonExporterPipleline': 1,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -100,3 +102,5 @@ IMAGES_STORE = os.path.join(project_dir, 'images')
 
 BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'ArticleSpider'))
+#设置代理类型
+RANDOM_UA_TYPE = "random"
