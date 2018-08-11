@@ -14,3 +14,5 @@ app/yang/__pycache__
 app/yang/admin/__pycache__/
 app/yang/common/__pycache__/
 app/yang/module/__pycache__/
+ArticleSpider/ArticleSpider/tools/
+ArticleSpider/ArticleSpider/models/__pycache__/

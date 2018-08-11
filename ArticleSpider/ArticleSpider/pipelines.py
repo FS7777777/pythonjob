@@ -54,3 +54,14 @@ class ArticleImagePipeline(ImagesPipeline):
             raise DropItem("Item contains no images")
         item['imge_path'] = image_paths
         return item
+
+from models.es_types import ArticleType
+
+class ElasticsearchPipeline(object):
+    '''将数据写入到es中'''
+    
+    def process_item(self, item, spider):
+        '''将item转换为es的数据'''
+        item.save_to_es()
+
+        return item

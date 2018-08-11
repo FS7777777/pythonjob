@@ -8,6 +8,9 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
+#导入ES model
+from models.es_types import ArticleType
+
 
 
 class ArticlespiderItem(scrapy.Item):
@@ -27,3 +30,11 @@ class ArticleItem(scrapy.Item):
     imge = scrapy.Field()
     content = scrapy.Field(output_processor=MapCompose(proc_input))
     imge_path = scrapy.Field()
+
+    def save_to_es(self):
+        article = ArticleType()
+        article.url = self['url']
+        article.imge = self["imge"]
+        article.content = self["content"]
+
+        article.save()

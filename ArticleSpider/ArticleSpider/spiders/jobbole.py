@@ -16,7 +16,11 @@ class JobboleSpider(scrapy.Spider):
 
     
     def __init__(self):
-        self.browser = webdriver.Chrome()
+        #设置chromedriver不加载图片
+        chrome_opt = webdriver.ChromeOptions()
+        prefs = {"profile.managed_default_content_settings.images":2}
+        chrome_opt.add_experimental_option("prefs", prefs)
+        self.browser = webdriver.Chrome(chrome_options=chrome_opt)
         super(JobboleSpider, self).__init__()
         dispatcher.connect(self.spider_closed, signals.spider_closed)
     
