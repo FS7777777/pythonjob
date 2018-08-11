@@ -17,8 +17,10 @@ ik_analyzer = CustomAnalyzer("ik_max_word", filter=["lowercase"])
 class ArticleType(DocType):
     url = Keyword()
     imge = Keyword()
-    # suggest = Completion(analyzer=ik_analyzer)
-    ''''分词'''
+    ''''分词 Completion支持搜索建议 ，因为直接指定分词器会报错不知道现在修改了没，
+    所以现在需要自定义CustomAnalyzer， 本字段存储搜索建议'''
+    suggest = Completion(analyzer=ik_analyzer)
+    '''不加搜索建议的分词器'''
     content = Text(analyzer="ik_max_word")
 
     class Meta:
