@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from selenium import webdriver
-from scrapy.xlib.pydispatch import dispatcher
+from scrapy.http import Request
 from scrapy import signals
+from scrapy.xlib.pydispatch import dispatcher
+from scrapy.utils.project import get_project_settings
+import requests
+from selenium import webdriver
+from urllib import parse
 from items import ArticleItem, ArticleItemLoader
 from scrapy.loader import ItemLoader
-import requests
-from scrapy.utils.project import get_project_settings
 
 class JobboleSpider(scrapy.Spider):
     name = "jobbole"
     allowed_domains = ["yoursupin.com"]
-    start_urls = ['https://www.yoursupin.com/page/2','https://www.yoursupin.com/page/3','https://www.yoursupin.com/page/4',
-    'https://www.yoursupin.com/page/5','https://www.yoursupin.com/page/6','https://www.yoursupin.com/page/7']
+    start_urls = ['https://www.yoursupin.com']
 
     
     def __init__(self):
@@ -34,6 +35,19 @@ class JobboleSpider(scrapy.Spider):
             yield scrapy.Request(url=u, callback=self.parse)
 
     def parse(self, response):
+        '''从主页面开始解析，获取内容完毕后，进入下一页继续采集'''
+        if response.status == 404:
+            pass
+
+        yield from self.parse_detail(response)
+
+        next_url = response.css(".next.page-numbers::attr(href)").extract_first("")
+        if next_url:
+            yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
+
+
+    def parse_detail(self, response):
+        '''获取所有列表'''
         post_nodes = response.css(".list_n1>a")
         
         for post_node in post_nodes:
@@ -61,12 +75,3 @@ class JobboleSpider(scrapy.Spider):
             # item_loader.add_value('imge_path',"")
             # article_item = item_loader.load_item()
             yield article_item
-
-
-
-            # yield Request(url=parse.urljoin(response.url, post_url), callback=self.parse)
-        
-        #提取下一页并交给scrapy进行下载
-        # next_url = response.css(".next.page-numbers::attr(href)").extract_first("")      
-        # if next_url:
-        #     yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
