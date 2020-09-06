@@ -2,10 +2,21 @@ import requests
 import asyncio
 import random
 import functools
+import redis
+
+global REDIS_CLIENT
 
 
 def init_redis():
-    pass
+    pool = redis.ConnectionPool(host='192.168.160.247', port=6379,
+                                db=0, password='W03wx2020@redis')
+    global REDIS_CLIENT
+    REDIS_CLIENT = redis.Redis(connection_pool=pool)
+
+
+def close_redis():
+    global REDIS_CLIENT
+    REDIS_CLIENT.close()
 
 
 def fake_header():
@@ -36,13 +47,19 @@ async def http_client(host):
     if response.status_code == 200:
         # 解析tle
         list_tle = parse_tle(response.text)
-        print(list_tle)
+        storage_tle(list_tle)
     else:
         print('down load tle error')
 
 
-def storage_tle():
-    pass
+def storage_tle(list_tle):
+    for temp in list_tle:
+        # 判断两行的有效性可以再完善下此处只做了长度校验
+        if len(temp) == 3:
+            # 获取两行第二行noradid
+            key = temp[2].split()[1]
+            global REDIS_CLIENT
+            REDIS_CLIENT.hset('orbit_global_tle', key, '\r\n'.join(temp))
 
 
 def parse_tle(context):
@@ -55,8 +72,13 @@ def parse_tle(context):
 
 
 if __name__ == "__main__":
+    # 初始化redis连接
+    init_redis()
+    # 获取数据
     loop = asyncio.get_event_loop()
     tasks = [http_client(host)
              for host in ['https://www.celestrak.com/NORAD/elements/tle-new.txt']]
     loop.run_until_complete(asyncio.wait(tasks))
     loop.close()
+    # 关闭连接
+    close_redis()
