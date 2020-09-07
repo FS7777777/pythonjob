@@ -55,13 +55,13 @@ def storage_tle(list_tle):
             if len(temp) == 3:
                 # 获取两行第二行noradid
                 key = temp[2].split()[1]
-                r.hset('orbit_global_tle', key, '\r\n'.join(temp))
+                r.hset('orbit_global_tle', key, '\n'.join(temp))
     finally:
         r.close()
 
 
 def parse_tle(context):
-    list_original = context.split('\r\n')
+    list_original = context.split('\n')
     # 把list分为长度为5的4段
     list_tle = []
     for i in range(0, len(list_original), 3):
@@ -94,12 +94,12 @@ if __name__ == "__main__":
                           'https://www.celestrak.com/NORAD/elements/other-comm.txt', 'https://www.celestrak.com/NORAD/elements/satnogs.txt',
                           'https://www.celestrak.com/NORAD/elements/gorizont.txt', 'https://www.celestrak.com/NORAD/elements/raduga.txt',
                           'https://www.celestrak.com/NORAD/elements/molniya.txt', 'https://www.celestrak.com/NORAD/elements/gps-ops.txt',
-                          'https://www.celestrak.com/NORAD/elements/glo-ops.txt', 'https://www.celestrak.com/NORAD/elements/galileo.txt',
-                          'https://www.celestrak.com/NORAD/elements/sbas.txt', 'https://www.celestrak.com/NORAD/elements/nnss.txt',
-                          'https://www.celestrak.com/NORAD/elements/musson.txt', 'https://www.celestrak.com/NORAD/elements/science.txt',
-                          'https://www.celestrak.com/NORAD/elements/geodetic.txt', 'https://www.celestrak.com/NORAD/elements/engineering.txt',
-                          'https://www.celestrak.com/NORAD/elements/education.txt', 'https://www.celestrak.com/NORAD/elements/military.txt',
-                          'https://www.celestrak.com/NORAD/elements/radar.txt', 'https://www.celestrak.com/NORAD/elements/cubesat.txt',
-                          'https://www.celestrak.com/NORAD/elements/other.txt']]
+                          'https://www.celestrak.com/NORAD/elements/glo-ops.txt', 'https://www.celestrak.com/NORAD/elements/beidou.txt',
+                          'https://www.celestrak.com/NORAD/elements/galileo.txt', 'https://www.celestrak.com/NORAD/elements/sbas.txt',
+                          'https://www.celestrak.com/NORAD/elements/nnss.txt', 'https://www.celestrak.com/NORAD/elements/musson.txt',
+                          'https://www.celestrak.com/NORAD/elements/science.txt', 'https://www.celestrak.com/NORAD/elements/geodetic.txt',
+                          'https://www.celestrak.com/NORAD/elements/engineering.txt', 'https://www.celestrak.com/NORAD/elements/education.txt',
+                          'https://www.celestrak.com/NORAD/elements/military.txt', 'https://www.celestrak.com/NORAD/elements/radar.txt',
+                          'https://www.celestrak.com/NORAD/elements/cubesat.txt', 'https://www.celestrak.com/NORAD/elements/other.txt']]
     loop.run_until_complete(asyncio.wait(tasks))
     loop.close()
