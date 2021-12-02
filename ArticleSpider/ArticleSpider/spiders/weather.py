@@ -4,15 +4,15 @@ from urllib import parse
 import scrapy
 
 
-class GirlSpider(scrapy.Spider):
-    name = 'gril'
-    allowed_domains = ['douban.com']
-    start_urls = ['https://www.douban.com/photos/album/57756464/']
+class WeatherSpider(scrapy.Spider):
+    name = 'weather'
+    allowed_domains = ['nmc.cn']
+    start_urls = ['http://www.nmc.cn/publish/satellite/FY4A-true-color.htm']
 
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'Cookie': 'bid=FyYqXADVlZw; _pk_id.100001.8cb4=87c25eac992a186a.1527238453.1.1527238453.1527238453.; _pk_ses.100001.8cb4=*; __utma=30149280.343087314.1527238454.1527238454.1527238454.1; __utmc=30149280; __utmz=30149280.1527238454.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmt=1; __utmb=30149280.1.10.1527238454',
-        'Host': 'www.douban.com',
+        'Host': 'www.nmc.cn',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
     }
 
@@ -25,20 +25,15 @@ class GirlSpider(scrapy.Spider):
             self.logger.warning(
                 'can not find any response from current request {}'.format(response.request.url))
             return
-        imgs = response.xpath('//div[@class="photolst clearfix"]//img/@src')
-        if not imgs:
-            self.logger.error('can not find any imgs')
+
+        weatherContent = response.xpath('//*[@id="timeWrap"]/div')
+        if not weatherContent:
+            self.logger.error('can not find any wather message')
             return
 
-        imgs_url = imgs.extract()
-        if not imgs_url:
-            self.logger.error('can not find any url')
-            return
-
-        for url in imgs_url:
+        for weather in weatherContent:
             # transfer the webp to jpg
-            if 'webp' in url:
-                url = url.replace('webp', 'jpg')
-
-            yield {"image_url": url, "source": response.request.url}
+            image_url = weather.xpath('@data-img').get()
+            data_time = weather.xpath('@data-time').get()
+            yield {"image_url": image_url, "data_time": data_time}
 

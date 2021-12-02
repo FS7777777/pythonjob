@@ -2,28 +2,27 @@
 import scrapy
 from scrapy.http import Request
 from scrapy import signals
-from scrapy.xlib.pydispatch import dispatcher
 from scrapy.utils.project import get_project_settings
 import requests
 from selenium import webdriver
 from urllib import parse
-from items import ArticleItem, ArticleItemLoader
-from scrapy.loader import ItemLoader
+from items import ArticleItem
 
 class JobboleSpider(scrapy.Spider):
     name = "jobbole"
     allowed_domains = ["yoursupin.com"]
     start_urls = ['https://www.yoursupin.com']
 
-    
-    def __init__(self):
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        spider = super(JobboleSpider, cls).from_crawler(crawler, *args, **kwargs)
+        crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
         #设置chromedriver不加载图片
         chrome_opt = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images":2}
         chrome_opt.add_experimental_option("prefs", prefs)
-        self.browser = webdriver.Chrome(chrome_options=chrome_opt)
-        super(JobboleSpider, self).__init__()
-        dispatcher.connect(self.spider_closed, signals.spider_closed)
+        cls.browser = webdriver.Chrome(r"F:\tools\chromedriver_win32\chromedriver.exe",chrome_options=chrome_opt)
+        return spider
     
     def spider_closed(self, spider):
         #当爬虫退出的时候关闭chrome

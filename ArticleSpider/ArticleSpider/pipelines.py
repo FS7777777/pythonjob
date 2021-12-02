@@ -10,10 +10,8 @@
 #     from io import BytesIO
 
 from PIL import Image
-import io
 
 
-import codecs
 import json
 import scrapy
 from scrapy.exporters import JsonItemExporter
@@ -24,8 +22,8 @@ class ArticlespiderPipeline(object):
     def process_item(self, item, spider):
         return item
 
-
-class JsonExporterPipleline(object):
+''' pipieline head => record all data to log file '''
+class StoragePipleline(object):
     #调用scrapy提供的json export导出json文件
     def __init__(self):
         self.file = open('articleexport.json', 'ab')
@@ -40,28 +38,26 @@ class JsonExporterPipleline(object):
         self.exporter.export_item(item)
         return item
 
-
-class ArticleImagePipeline(ImagesPipeline):
+''' pipieline  => download image by url '''
+class DownloadImagePipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
-        if not item.get('url'):
-            raise DropItem('item not find any url:{}'.format(json.dumps(item)))
+        if not item.get('image_url'):
+            raise DropItem('item not find any image_url:{}'.format(json.dumps(item)))
 
-        yield scrapy.Request(url=item.get('url'))
+        yield scrapy.Request(url=item.get('image_url'))
 
     def item_completed(self, results, item, info):
+        ''' 如果item中没有url属性表示无需下载 '''
+        if not item.get('image_url'):
+            return item
         image_paths = [x['path'] for ok, x in results if ok]
         if not image_paths:
             raise DropItem("Item contains no images")
         item['imge_path'] = image_paths
         return item
 
-from models.es_types import ArticleType
 
-class ElasticsearchPipeline(object):
-    '''将数据写入到es中'''
-    
+''' pipieline tail => publish all data '''
+class PublishPipleline(object):
     def process_item(self, item, spider):
-        '''将item转换为es的数据'''
-        item.save_to_es()
-
         return item
