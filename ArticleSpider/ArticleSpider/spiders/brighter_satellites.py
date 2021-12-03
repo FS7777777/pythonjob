@@ -3,6 +3,7 @@ import scrapy
 from urllib import parse
 import scrapy
 from scrapy import signals
+from scrapy.http import Request
 from selenium import webdriver
 
 
@@ -13,6 +14,7 @@ class BrighterSatellitesSpider(scrapy.Spider):
     allowed_domains = ['heavens-above.com']
     start_urls = ['https://www.heavens-above.com']
     cookies_dict = dict()
+    city_list = []
 
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -24,23 +26,27 @@ class BrighterSatellitesSpider(scrapy.Spider):
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
         spider = super(BrighterSatellitesSpider, cls).from_crawler(crawler, *args, **kwargs)
+        ''' 从命令行参数中获取登录信息、city Id参数传递规则 citys=44884,12345 '''
+        userName = kwargs.get('username')
+        pwd = kwargs.get('pwd')
+        citys = kwargs.get('citys')
+        if  citys:
+            cls.city_list = citys.split('')
         crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
         #设置chromedriver不加载图片
         chrome_opt = webdriver.ChromeOptions()
-        prefs = {"profile.managed_default_content_settings.images":2}
-        chrome_opt.add_experimental_option("prefs", prefs)
+        # prefs = {"profile.managed_default_content_settings.images":2}
+        # chrome_opt.add_experimental_option("prefs", prefs)
         cls.browser = webdriver.Chrome(r"F:\tools\chromedriver_win32\chromedriver.exe",chrome_options=chrome_opt)
         cls.browser.get("https://www.heavens-above.com/login.aspx")
-        # cls.browser.get("https://www.heavens-above.com/AllSats.aspx")
         '''登录'''
-        cls.browser.find_element_by_xpath('//*[@id="ctl00_cph1_Login1_UserName"]').send_keys('-')
-        cls.browser.find_element_by_xpath('//*[@id="ctl00_cph1_Login1_Password"]').send_keys('-')
+        cls.browser.find_element_by_xpath('//*[@id="ctl00_cph1_Login1_UserName"]').send_keys(userName)
+        cls.browser.find_element_by_xpath('//*[@id="ctl00_cph1_Login1_Password"]').send_keys(pwd)
         cls.browser.find_element_by_xpath('//*[@id="ctl00_cph1_Login1_LoginButton"]').click()
 
         cookies = cls.browser.get_cookies()
         for cookie in cookies:
             cls.cookies_dict[cookie['name']] = cookie['value']
-
         return spider
 
 
@@ -55,11 +61,23 @@ class BrighterSatellitesSpider(scrapy.Spider):
             yield scrapy.Request(url=u, cookies=self.cookies_dict, headers=self.headers, callback=self.parse)    
 
     def parse(self, response):
+        
+        yield from self.parse_detail(response)
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        print(response.url)
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        city = self.city_list.pop(0)
+        if city:
+            print(city)
+            print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+            yield Request(url=response.url, cookies=self.cookies_dict, meta = {'city':city}, callback=self.parse,dont_filter=True)
+        else:
+            yield Request(url=response.url, cookies=self.cookies_dict, meta = {'city':city}, callback=self.parse,dont_filter=False)
+    def parse_detail(self, response):
         if not response.body:
             self.logger.warning(
                 'can not find any response from current request {}'.format(response.request.url))
             return
-
         print(response.text) 
         '''开始筛选数据'''
         tb_tbody = response.xpath('//*[@id="aspnetForm"]/table/tbody/tr[3]/td[1]/table[3]/tbody/tr')
@@ -67,5 +85,4 @@ class BrighterSatellitesSpider(scrapy.Spider):
         print('================================================================================') 
         for tr in tb_tbody:
             sat = tr.xpath('td//text()').extract()
-            yield {"brighter_satellites": sat}
-
+            yield {'city':response.meta.get('city'),'brighter_satellites': sat}

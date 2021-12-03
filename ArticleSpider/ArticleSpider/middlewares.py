@@ -64,20 +64,26 @@ class JSPageMiddleware:
     #通过chrome请求动态网页
     def process_request(self, request, spider):
         if spider.name == "brighter_satellites":
+            city = request.meta.get('city')
+            print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+            print(city)
+            print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+            if city is None:
+                return HtmlResponse(url=spider.browser.current_url,body=b'', encoding="utf-8", request=request)
+            spider.browser.get("https://www.heavens-above.com")
             '''选择地理位置'''
-            Select(spider.browser.find_element_by_xpath('//*[@id="ctl00_ddlLocation"]')).select_by_value("2151038")
+            Select(spider.browser.find_element_by_xpath('//*[@id="ctl00_ddlLocation"]')).select_by_value(city)
 
             '''选择明亮卫星每日预报'''
-            spider.browser.find_element_by_xpath('//*[@id="aspnetForm"]/table/tbody/tr[3]/td[1]/table[2]/tbody/tr/td/table/tbody/tr/td[1]/div/p[18]/a').click()
+            spider.browser.find_element_by_xpath('//*[@href="AllSats.aspx"]').click()
 
             '''选择最低亮度3.0'''
             spider.browser.find_element_by_xpath('//*[@id="ctl00_cph1_radioButtonsMag_0"]').click()
 
             '''选择傍晚'''
-            spider.browser.find_element_by_xpath('//*[@id="ctl00_cph1_TimeSelectionControl1_radioAMPM"]/tbody/tr[2]/td/label').click()
+            spider.browser.find_element_by_xpath('//*[@id="ctl00_cph1_TimeSelectionControl1_radioAMPM_1"]').click()
 
             # print(tb_tbody.text)
-            print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
             return HtmlResponse(url=spider.browser.current_url, body=spider.browser.page_source, encoding="utf-8", request=request)
 
 
