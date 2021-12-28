@@ -9,8 +9,8 @@ global POOL
 
 def init_redis_pool():
     global POOL
-    POOL = redis.ConnectionPool(host='192.168.160.247', port=6379,
-                                db=0, password='W03wx2020@redis')
+    POOL = redis.ConnectionPool(host='127.0.0.1', port=6379,
+                                db=0, password='redis')
 
 
 def fake_header():
