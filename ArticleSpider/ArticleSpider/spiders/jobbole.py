@@ -10,8 +10,8 @@ from items import ArticleItem
 
 class JobboleSpider(scrapy.Spider):
     name = "jobbole"
-    allowed_domains = ["yoursupin.com"]
-    start_urls = ['https://www.yoursupin.com']
+    allowed_domains = ["www.taduo.net"]
+    start_urls = ['http://www.taduo.net/manhua/2/2824.html?page=1']
 
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
@@ -20,7 +20,7 @@ class JobboleSpider(scrapy.Spider):
         #设置chromedriver不加载图片
         chrome_opt = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images":2}
-        chrome_opt.add_experimental_option("prefs", prefs)
+        # chrome_opt.add_experimental_option("prefs", prefs)
         cls.browser = webdriver.Chrome(r"F:\tools\chromedriver_win32\chromedriver.exe",chrome_options=chrome_opt)
         return spider
     
@@ -40,7 +40,7 @@ class JobboleSpider(scrapy.Spider):
 
         yield from self.parse_detail(response)
 
-        next_url = response.css(".next.page-numbers::attr(href)").extract_first("")
+        next_url = response.css(".next::attr(href)").extract_first("")
         if next_url:
             yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
 

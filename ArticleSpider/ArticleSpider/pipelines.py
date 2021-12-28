@@ -17,6 +17,7 @@ import scrapy
 from scrapy.exporters import JsonItemExporter
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy.exceptions import DropItem
+import redis
 
 class ArticlespiderPipeline(object):
     def process_item(self, item, spider):
@@ -42,7 +43,8 @@ class StoragePipleline(object):
 class DownloadImagePipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
         if not item.get('image_url'):
-            raise DropItem('item not find any image_url:{}'.format(json.dumps(item)))
+            # raise DropItem('item not find any image_url:{}'.format(json.dumps(item)))
+            return
 
         yield scrapy.Request(url=item.get('image_url'))
 
@@ -59,5 +61,27 @@ class DownloadImagePipeline(ImagesPipeline):
 
 ''' pipieline tail => publish all data '''
 class PublishPipleline(object):
+    def __init__(self,redisPool):
+        self.redisPool = redisPool
+        self.r = redis.Redis(connection_pool=self.redisPool)
+        self.p = self.r.pubsub(ignore_subscribe_messages=True)
+    
+    @classmethod
+    def from_settings(cls,settings):
+        """
+        获取settings 文件redis配置
+        """
+        dbparams = dict(host=settings['REDIS_HOST'],port=settings['REDIS_PORT'],pd=settings['REDIS_PD'])
+        redisPool = redis.ConnectionPool(host=dbparams['host'], port=dbparams['port'], db=0, password=dbparams['pd'])
+        return cls(redisPool)
+
     def process_item(self, item, spider):
+        ''' 数据存储到redis中 '''
+        self.r.rpush('scarpy-1',json.dumps(item))
+        # self.r.publish('msg',json.dumps(item))
         return item
+
+    def close_spider(self, spider):
+        ''' 发布数据采集完成通知 '''
+        self.r.publish('msg','scrapy {0} finish'.format(spider.name))
+        self.redisPool.disconnect()

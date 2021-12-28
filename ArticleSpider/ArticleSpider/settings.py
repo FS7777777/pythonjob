@@ -104,4 +104,8 @@ IMAGES_STORE = os.path.join(project_dir, 'images')
 BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'ArticleSpider'))
 #设置代理类型
-RANDOM_UA_TYPE = "random"
+RANDOM_UA_TYPE = 'random'
+#Redis
+REDIS_HOST='192.168.160.120'
+REDIS_PORT=6379
+REDIS_PD='-'
